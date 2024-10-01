@@ -26,6 +26,15 @@ public:
 				_keyUpListeners[_event.key.keysym.sym].Raise();
 				_isKeyPressed[_event.key.keysym.sym] = false;
 				break;
+
+			case SDL_MOUSEMOTION:
+				break;
+
+			case SDL_MOUSEBUTTONDOWN:
+				break;
+
+			case SDL_MOUSEBUTTONUP:
+				break;
 			}
 		}
 
@@ -69,6 +78,23 @@ public:
 	}
 
 private:
+	template<typename T>
+	using ButtonEventMap = std::unordered_map<T, Event<void>>;
+
+	struct
+	{
+		ButtonEventMap<SDL_Keycode> downListeners;
+		ButtonEventMap<SDL_Keycode> upListeners;
+		ButtonEventMap<SDL_Keycode> holdListeners;
+	} _keyboard;
+
+	struct
+	{
+		ButtonEventMap<Uint8> downListeners;
+		ButtonEventMap<Uint8> upListeners;
+		ButtonEventMap<Uint8> holdListeners;
+	} _cursor;
+
 	using KeyStateMap = std::unordered_map<SDL_Keycode, bool>;
 	using KeyEventMap = std::unordered_map<SDL_Keycode, Event<void>>;
 	using CursorEvent = Event<void, float, float>;
