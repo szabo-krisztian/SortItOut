@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Input Manager">
+      <UniqueIdentifier>{96013c42-c0c7-4520-82bd-b90d5f30d56a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SortItOut.cpp">
@@ -31,6 +34,9 @@
     </ClInclude>
     <ClInclude Include="renderer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="event.hpp">
+      <Filter>Input Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
