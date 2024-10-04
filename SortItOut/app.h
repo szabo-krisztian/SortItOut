@@ -12,8 +12,9 @@ public:
 	App(int windowWidth, int windowHeight);
 
 	void Run();
-
+	
 private:
+	bool _userWantsToQuit = false;
 	Renderer _renderer;
 	InputManager _inputManager;
 };

@@ -10,8 +10,8 @@ namespace tlr
 class InputManager
 {
 public:
-	using KeyboardCallback = void(*)();
-	using MouseCallback = void(*)(const glm::ivec2&);
+	using KeyboardCallback = std::function<void()>;
+	using MouseCallback = std::function<void(const glm::ivec2&)>;
 
 	void Update();
 	
