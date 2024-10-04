@@ -10,36 +10,31 @@ namespace tlr
 class InputManager
 {
 public:
+	using KeyboardCallback = void(*)();
+	using MouseCallback = void(*)(glm::ivec2);
+
 	void Update();
 	
-	void AddKeyDownCallback(SDL_Keycode code, void(*listener)())
-	{
-		_keyDownListeners[code] += listener;
-	}
-	void RemoveKeyDownCallback(SDL_Keycode code, void(*listener)())
-	{
-		_keyDownListeners[code] -= listener;
-	}
+	void AddKeyboardDownCallback(SDL_Keycode keyCode, KeyboardCallback listener);
+	void RemoveKeyboardDownCallback(SDL_Keycode keyCode, KeyboardCallback listener);
 
-	void AddKeyUpCallback(SDL_Keycode code, void(*listener)())
-	{
-		_keyUpListeners[code] += listener;
-	}
-	void RemoveKeyUpCallback(SDL_Keycode code, void(*listener)())
-	{
-		_keyUpListeners[code] -= listener;
-	}
+	void AddKeyboardUpCallback(SDL_Keycode keyCode, KeyboardCallback listener);
+	void RemoveKeyboardUpCallback(SDL_Keycode keyCode, KeyboardCallback listener);
 
-	void AddKeyHoldCallback(SDL_Keycode code, void(*listener)())
-	{
-		_keyHoldListeners[code] += listener;
-	}
-	void RemoveKeyHoldCallback(SDL_Keycode code, void(*listener)())
-	{
-		_keyHoldListeners[code] -= listener;
-	}
+	void AddKeyboardHoldCallback(SDL_Keycode keyCode, KeyboardCallback listener);
+	void RemoveKeyboardHoldCallback(SDL_Keycode keyCode, KeyboardCallback listener);
 
+	void AddMouseMotionCallback(MouseCallback listener);
+	void RemoveMouseMotionCallback(MouseCallback listener);
 
+	void AddMouseDownCallback(Uint8 button, MouseCallback listener);
+	void RemoveKeyboardDownCallback(Uint8 button, MouseCallback listener);
+
+	void AddKeyboardUpCallback(Uint8 button, MouseCallback listener);
+	void RemoveKeyboardUpCallback(Uint8 button, MouseCallback listener);
+
+	void AddKeyboardHoldCallback(Uint8 button, MouseCallback listener);
+	void RemoveKeyboardHoldCallback(Uint8 button, MouseCallback listener);
 
 private:
 	SDL_Event     _event;

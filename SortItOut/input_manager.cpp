@@ -20,6 +20,76 @@ void InputManager::Update()
 	}
 }
 
+void InputManager::AddKeyboardDownCallback(SDL_Keycode keyCode, KeyboardCallback listener)
+{
+	_keyboard.downEvents[keyCode] += listener;
+}
+
+void InputManager::RemoveKeyboardDownCallback(SDL_Keycode keyCode, KeyboardCallback listener)
+{
+	_keyboard.downEvents[keyCode] -= listener;
+}
+
+void InputManager::AddKeyboardUpCallback(SDL_Keycode keyCode, KeyboardCallback listener)
+{
+	_keyboard.upEvents[keyCode] += listener;
+}
+
+void InputManager::RemoveKeyboardUpCallback(SDL_Keycode keyCode, KeyboardCallback listener)
+{
+	_keyboard.upEvents[keyCode] -= listener;
+}
+
+void InputManager::AddKeyboardHoldCallback(SDL_Keycode keyCode, KeyboardCallback listener)
+{
+	_keyboard.holdEvents[keyCode] += listener;
+}
+
+void InputManager::RemoveKeyboardHoldCallback(SDL_Keycode keyCode, KeyboardCallback listener)
+{
+	_keyboard.holdEvents[keyCode] -= listener;
+}
+
+void InputManager::AddMouseMotionCallback(MouseCallback listener)
+{
+	_mouse.cursorMoved += listener;
+}
+
+void InputManager::RemoveMouseMotionCallback(MouseCallback listener)
+{
+	_mouse.cursorMoved -= listener;
+}
+
+void InputManager::AddMouseDownCallback(Uint8 button, MouseCallback listener)
+{
+	_mouse.downEvents[button] += listener;
+}
+
+void InputManager::RemoveKeyboardDownCallback(Uint8 button, MouseCallback listener)
+{
+	_mouse.downEvents[button] -= listener;
+}
+
+void InputManager::AddKeyboardUpCallback(Uint8 button, MouseCallback listener)
+{
+	_mouse.upEvents[button] += listener;
+}
+
+void InputManager::RemoveKeyboardUpCallback(Uint8 button, MouseCallback listener)
+{
+	_mouse.upEvents[button] -= listener;
+}
+
+void InputManager::AddKeyboardHoldCallback(Uint8 button, MouseCallback listener)
+{
+	_mouse.holdEvents[button] += listener;
+}
+
+void InputManager::RemoveKeyboardHoldCallback(Uint8 button, MouseCallback listener)
+{
+	_mouse.holdEvents[button] -= listener;
+}
+
 void InputManager::ProcessKeyboardEvents()
 {
 	auto keyCode = _event.key.keysym.sym;
