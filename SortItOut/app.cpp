@@ -4,14 +4,15 @@
 namespace tlr
 {
 
-void printsm()
+void printsm(const glm::ivec2& position)
 {
-	std::cout << "pressed" << std::endl;
+	std::cout << position.x << ", " << position.y << std::endl;
 }
 
 App::App(int windowWidth, int windowHeight) : _renderer(windowWidth, windowHeight)
 {
-	_inputManager.AddKeyboardHoldCallback(SDLK_w, printsm);
+	
+	_inputManager.AddMouseMotionCallback(printsm);
 }
 
 void App::Run()

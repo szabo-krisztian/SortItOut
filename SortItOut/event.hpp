@@ -1,6 +1,7 @@
 #pragma once
 
-#include <unordered_set>
+#include <vector>
+#include <functional>
 
 namespace tlr
 {
@@ -9,14 +10,10 @@ template<typename R, typename... Args>
 class Event
 {
 public:
-    void operator+=(R(*listener)(Args...))
+    template<typename F>
+    void operator+=(F&& listener)
     {
-        _listeners.insert(listener);
-    }
-
-    void operator-=(R(*listener)(Args...))
-    {
-        _listeners.erase(listener);
+        _listeners.emplace_back(std::forward<F>(listener));
     }
 
     void Raise(Args... args)
@@ -28,7 +25,7 @@ public:
     }
 
 private:
-    std::unordered_set<R(*)(Args...)> _listeners;
+    std::vector<std::function<R(Args...)>> _listeners;
 };
 
 } // namespace tlr

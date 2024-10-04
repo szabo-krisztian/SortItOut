@@ -11,14 +11,14 @@ namespace tlr
 
 struct MouseState
 {
-	using ButtonEventMap = std::unordered_map<Uint8, Event<void, glm::ivec2>>;
+	using ButtonEventMap = std::unordered_map<Uint8, Event<void, const glm::ivec2&>>;
 	using ButtonStateMap = std::unordered_map<Uint8, bool>;
 
 	ButtonStateMap isKeyPressed;
 	ButtonEventMap downEvents;
 	ButtonEventMap upEvents;
 	ButtonEventMap holdEvents;
-	Event<void, glm::ivec2> cursorMoved;
+	Event<void, const glm::ivec2&> cursorMoved;
 };
 
 } // namespace tlr
