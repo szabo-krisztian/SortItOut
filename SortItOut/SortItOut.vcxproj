@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="event.hpp" />
+    <ClInclude Include="input_manager.h" />
     <ClInclude Include="renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
