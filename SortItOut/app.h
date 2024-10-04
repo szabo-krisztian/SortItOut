@@ -14,9 +14,11 @@ public:
 	void Run();
 	
 private:
-	bool _userWantsToQuit = false;
-	Renderer _renderer;
+	bool		 _userWantsToQuit = false;
+	Renderer	 _renderer;
 	InputManager _inputManager;
+
+	void Quit();
 };
 
 } // namespace tlr
