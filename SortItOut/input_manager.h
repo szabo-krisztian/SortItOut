@@ -42,7 +42,9 @@ private:
 	MouseState    _mouse;
 
 	void ProcessKeyboardEvents();
-	void ProcessMouseEvents();
+	void ProcessMouseEvents(const glm::ivec2& position);
+	void UpdateKeyboardHoldEvents();
+	void UpdateMouseHoldEvents(const glm::ivec2& position);
 };
 
 } // namespace tlr

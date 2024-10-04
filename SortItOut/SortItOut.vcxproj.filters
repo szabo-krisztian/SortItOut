@@ -27,6 +27,12 @@
     <ClCompile Include="renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mouse_state.h">
+      <Filter>Input Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="input_manager.cpp">
+      <Filter>Input Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -39,6 +45,9 @@
       <Filter>Input Manager</Filter>
     </ClInclude>
     <ClInclude Include="input_manager.h">
+      <Filter>Input Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard_state.h">
       <Filter>Input Manager</Filter>
     </ClInclude>
   </ItemGroup>

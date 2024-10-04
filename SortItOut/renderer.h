@@ -13,12 +13,14 @@ public:
 	Renderer(int windowWidth, int windowHeight);
 	~Renderer();
 
+	/*
 	// TODO
 	void ClearScreen();
 	// TODO
 	void DrawSquare();
 	// TODO
 	void DisplayScreen();
+	*/
 
 private:
 	const int _WINDOW_WIDTH, _WINDOW_HEIGHT;

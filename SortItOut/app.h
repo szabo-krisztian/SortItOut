@@ -1,6 +1,7 @@
 #pragma once
 
 #include "renderer.h"
+#include "input_manager.h"
 
 namespace tlr
 {
@@ -14,7 +15,7 @@ public:
 
 private:
 	Renderer _renderer;
-
+	InputManager _inputManager;
 };
 
 } // namespace tlr

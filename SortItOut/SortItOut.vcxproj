@@ -128,6 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="input_manager.cpp" />
+    <ClCompile Include="mouse_state.h" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="SortItOut.cpp" />
   </ItemGroup>
@@ -135,6 +137,7 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="event.hpp" />
     <ClInclude Include="input_manager.h" />
+    <ClInclude Include="keyboard_state.h" />
     <ClInclude Include="renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

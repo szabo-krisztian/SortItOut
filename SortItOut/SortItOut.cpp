@@ -8,5 +8,6 @@ constexpr int WINDOW_HEIGHT = 600;
 int main()
 {
 	tlr::App app(WINDOW_WIDTH, WINDOW_HEIGHT);
+	app.Run();
 	return 0;
 }

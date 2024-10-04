@@ -5,6 +5,9 @@ namespace tlr
 
 void InputManager::Update()
 {
+	glm::ivec2 position;
+	SDL_GetMouseState(&position.x, &position.y);
+
 	while (SDL_PollEvent(&_event))
 	{
 		bool keyboardEvent = _event.type == SDL_KEYDOWN || _event.type == SDL_KEYUP;
@@ -15,9 +18,12 @@ void InputManager::Update()
 		}
 		else if (mouseEvent)
 		{
-			ProcessMouseEvents();
+			ProcessMouseEvents(position);
 		}
 	}
+
+	UpdateKeyboardHoldEvents();
+	UpdateMouseHoldEvents(position);
 }
 
 void InputManager::AddKeyboardDownCallback(SDL_Keycode keyCode, KeyboardCallback listener)
@@ -106,7 +112,37 @@ void InputManager::ProcessKeyboardEvents()
 		_keyboard.isKeyPressed[keyCode] = false;
 		break;
 	}
+}
 
+void InputManager::ProcessMouseEvents(const glm::ivec2& position)
+{
+	switch (_event.type)
+	{
+	case SDL_MOUSEMOTION:
+		_mouse.cursorMoved.Raise(position);
+		break;
+
+	case SDL_MOUSEBUTTONDOWN:
+	{
+		auto button = _event.button.button;
+		_mouse.downEvents[button].Raise(position);
+		_mouse.isKeyPressed[button] = true;
+		break;
+	}
+
+	case SDL_MOUSEBUTTONUP:
+	{
+		auto button = _event.button.button;
+		_mouse.upEvents[button].Raise(position);
+		_mouse.isKeyPressed[button] = false;
+		break;
+	}
+
+	}
+}
+
+void InputManager::UpdateKeyboardHoldEvents()
+{
 	for (const auto& pair : _keyboard.isKeyPressed)
 	{
 		if (pair.second)
@@ -116,30 +152,8 @@ void InputManager::ProcessKeyboardEvents()
 	}
 }
 
-void InputManager::ProcessMouseEvents()
+void InputManager::UpdateMouseHoldEvents(const glm::ivec2& position)
 {
-	glm::ivec2 position;
-	Uint32 mouseState = SDL_GetMouseState(&position.x, &position.y);
-
-	switch (_event.type)
-	{
-	case SDL_MOUSEMOTION:
-		_mouse.cursorMoved.Raise(position);
-		break;
-
-	case SDL_MOUSEBUTTONDOWN:
-		auto button = _event.button.button;
-		_mouse.downEvents[button].Raise(position);
-		_mouse.isKeyPressed[button] = true;
-		break;
-
-	case SDL_MOUSEBUTTONUP:
-		auto button = _event.button.button;
-		_mouse.upEvents[button].Raise(position);
-		_mouse.isKeyPressed[button] = false;
-		break;
-	}
-
 	for (const auto& pair : _mouse.isKeyPressed)
 	{
 		if (pair.second)
