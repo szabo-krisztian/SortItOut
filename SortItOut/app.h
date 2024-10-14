@@ -18,7 +18,9 @@ private:
 	Renderer	 _renderer;
 	InputManager _inputManager;
 
-	void Quit();
+	void InitCallbacks();
+	void QuitCallback();
+	void PlaceSquareCallback(const glm::ivec2& posistion);
 };
 
 } // namespace tlr

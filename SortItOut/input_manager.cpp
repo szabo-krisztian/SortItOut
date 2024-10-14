@@ -51,12 +51,12 @@ void InputManager::AddMouseDownCallback(Uint8 button, MouseCallback listener)
 	_mouse.downEvents[button] += listener;
 }
 
-void InputManager::AddKeyboardUpCallback(Uint8 button, MouseCallback listener)
+void InputManager::AddMouseUpCallback(Uint8 button, MouseCallback listener)
 {
 	_mouse.upEvents[button] += listener;
 }
 
-void InputManager::AddKeyboardHoldCallback(Uint8 button, MouseCallback listener)
+void InputManager::AddMouseHoldCallback(Uint8 button, MouseCallback listener)
 {
 	_mouse.holdEvents[button] += listener;
 }

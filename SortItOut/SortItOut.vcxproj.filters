@@ -19,6 +19,9 @@
     <Filter Include="Sorters">
       <UniqueIdentifier>{db5ee187-006a-419c-9242-f4dd711f1fc1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Block Table">
+      <UniqueIdentifier>{512c5ec6-d004-46de-a64a-5cc2b937c6a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SortItOut.cpp">
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="quick_sort.h">
       <Filter>Sorters</Filter>
+    </ClInclude>
+    <ClInclude Include="block_table.h">
+      <Filter>Block Table</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,17 +7,8 @@ namespace tlr
 {
 
 App::App(int windowWidth, int windowHeight) : _renderer(windowWidth, windowHeight)
-{
-	_inputManager.AddKeyboardDownCallback(SDLK_ESCAPE, [this]() { Quit(); });
-}
-
-void print(std::vector<int>& k)
-{
-	for (auto& i : k)
-	{
-		std::cout << i << " ";
-	}
-	std::cout << std::endl;
+{	
+	InitCallbacks();
 }
 
 void App::Run()
@@ -28,9 +19,21 @@ void App::Run()
 	}
 }
 
-void App::Quit()
+void App::InitCallbacks()
+{
+	_inputManager.AddMouseDownCallback(SDL_BUTTON_LEFT, [this] (const glm::ivec2& position) {
+		PlaceSquareCallback(position);
+	});
+}
+
+void App::QuitCallback()
 {
 	_userWantsToQuit = true;
+}
+
+void App::PlaceSquareCallback(const glm::ivec2& posistion)
+{
+	std::cout << "place" << std::endl;
 }
 
 } // namespace tlr

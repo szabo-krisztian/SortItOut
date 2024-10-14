@@ -21,8 +21,8 @@ public:
 
 	void AddMouseMotionCallback(MouseCallback listener);
 	void AddMouseDownCallback(Uint8 button, MouseCallback listener);
-	void AddKeyboardUpCallback(Uint8 button, MouseCallback listener);
-	void AddKeyboardHoldCallback(Uint8 button, MouseCallback listener);
+	void AddMouseUpCallback(Uint8 button, MouseCallback listener);
+	void AddMouseHoldCallback(Uint8 button, MouseCallback listener);
 	
 private:
 	SDL_Event     _event;

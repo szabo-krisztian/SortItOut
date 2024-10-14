@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
+    <ClInclude Include="block_table.h" />
     <ClInclude Include="event.hpp" />
     <ClInclude Include="input_manager.h" />
     <ClInclude Include="isorter.h" />

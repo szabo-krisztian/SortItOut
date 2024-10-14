@@ -23,12 +23,13 @@ public:
 	*/
 
 private:
-	const int _WINDOW_WIDTH, _WINDOW_HEIGHT;
-
-	SDL_Window *_window;
+	const int _WINDOW_WIDTH;
+	const int _WINDOW_HEIGHT;
+	SDL_Window   *_window;
 	SDL_Renderer *_renderer;
 
 	bool InitSDL();
+
 };
 
 } // namespace tlr
