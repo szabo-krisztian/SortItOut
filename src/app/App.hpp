@@ -1,8 +1,11 @@
+#include <vector>
+
 #include <SDL2/SDL.h>
 
 #include "AppConfig.hpp"
 #include "KeyBindings.hpp"
 #include "InputManager.hpp"
+#include "Sorting.hpp"
 
 namespace tlr
 {
@@ -25,10 +28,13 @@ private:
     KeyBindings m_keyBindings;
     InputManager &m_inputManager;
     bool m_isAppRunning = true;
-    
+
     
     void Close_Callback();
 
+    std::vector<int> m_numbers;
+    void Shuffle();
+    
     void Render();
 };
 

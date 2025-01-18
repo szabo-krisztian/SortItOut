@@ -1,6 +1,9 @@
 #include "App.hpp"
 
 #include <cassert>
+#include <numeric>
+#include <algorithm>
+#include <random>
 
 namespace tlr
 {
@@ -8,7 +11,8 @@ namespace tlr
 App::App(const AppConfig &appConfig) :
     m_WINDOW_WIDTH(appConfig.windowWidth),
     m_WINDOW_HEIGHT(appConfig.windowHeight),
-    m_inputManager(InputManager::GetInstance())
+    m_inputManager(InputManager::GetInstance()),
+    m_numbers(appConfig.numberCount)
 {
     assert(SDL_Init(SDL_INIT_VIDEO) == 0 && "SDL init error");
     m_window = SDL_CreateWindow("Sort it out", appConfig.windowPosX, appConfig.windowPosY, m_WINDOW_WIDTH, m_WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
@@ -19,6 +23,11 @@ App::App(const AppConfig &appConfig) :
     assert(m_surface != nullptr && "SDL surface creation error");
 
     m_inputManager.KeyPressed[m_keyBindings.CloseButton][KMOD_NONE].RegisterCallback(this, &App::Close_Callback);
+
+    std::iota(m_numbers.begin(), m_numbers.end(), 1);
+    Shuffle();
+    for (auto x : m_numbers) { std::cout << x << ", "; }
+    std::cout << std::endl;
 }
 
 App::~App()
@@ -35,6 +44,7 @@ void App::Run()
 
     while (m_isAppRunning)
     {
+
         m_inputManager.Update();
         SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
         SDL_RenderClear(m_renderer);
@@ -50,9 +60,29 @@ void App::Close_Callback()
     m_isAppRunning = false;
 }
 
+void App::Shuffle()
+{
+    static std::random_device randomDevice;
+    static std::mt19937 generator(randomDevice());
+    std::shuffle(m_numbers.begin(), m_numbers.end(), generator);
+}
+
 void App::Render()
 {
-    
+    static const float RECT_SIZE = m_WINDOW_HEIGHT / static_cast<float>(m_numbers.size() + 1);
+    static const float LEFTOVER = (m_WINDOW_WIDTH - m_numbers.size() * RECT_SIZE) / static_cast<float>(m_numbers.size() - 1);
+
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+    for (std::size_t i = 0; i < m_numbers.size(); ++i)
+    {
+        SDL_Rect rect;
+        rect.h = RECT_SIZE * m_numbers[i];
+        rect.w = RECT_SIZE;
+        rect.x = static_cast<int>(i) * (RECT_SIZE + LEFTOVER);
+        rect.y = m_WINDOW_HEIGHT - rect.h;
+
+        SDL_RenderFillRect(m_renderer, &rect);
+    }
 }
 
 } // namespace tlr
