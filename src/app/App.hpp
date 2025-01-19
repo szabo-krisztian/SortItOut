@@ -1,4 +1,5 @@
 #include <vector>
+#include <thread>
 
 #include <SDL2/SDL.h>
 
@@ -6,6 +7,7 @@
 #include "KeyBindings.hpp"
 #include "InputManager.hpp"
 #include "Sorting.hpp"
+#include "SyncVector.hpp"
 
 namespace tlr
 {
@@ -31,9 +33,12 @@ private:
 
     
     void Close_Callback();
+    
+    void StartSorting();
 
-    std::vector<int> m_numbers;
-    void Shuffle();
+    std::thread t;
+
+    SyncVector m_numbers;
     
     void Render();
 };

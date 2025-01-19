@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
         .windowHeight = 600,
         .windowPosX = 100,
         .windowPosY = 100,
-        .numberCount = 50
+        .numberCount = 5
     };
 
     tlr::App app(appConfig);

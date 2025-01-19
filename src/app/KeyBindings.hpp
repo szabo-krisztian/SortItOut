@@ -5,7 +5,8 @@ namespace tlr
 
 struct KeyBindings
 {
-    SDL_Keycode CloseButton = SDLK_ESCAPE;
+    SDL_Keycode close = SDLK_ESCAPE;
+    SDL_Keycode startSorting = SDLK_SPACE;
 };
 
 } // namespace tlr
