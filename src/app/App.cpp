@@ -7,7 +7,7 @@
 #include <chrono>
 #include <thread>
 
-#include "MergeSort.hpp"
+#include "Algorithms.hpp"
 
 namespace tlr
 {
@@ -17,7 +17,7 @@ App::App(const AppConfig &appConfig) :
     m_WINDOW_HEIGHT(appConfig.windowHeight),
     m_inputManager(InputManager::GetInstance()),
     m_numbers(appConfig.numberCount, appConfig.swapTimeInMillis),
-    m_algorithm(std::make_unique<MergeSort>(m_isAppRunning))
+    m_algorithm(std::make_unique<QuickSort>(m_isAppRunning))
 {
     assert(SDL_Init(SDL_INIT_VIDEO) == 0 && "SDL init error");
     m_window = SDL_CreateWindow("Sort it out", appConfig.windowPosX, appConfig.windowPosY, m_WINDOW_WIDTH, m_WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
@@ -28,8 +28,13 @@ App::App(const AppConfig &appConfig) :
     assert(m_surface != nullptr && "SDL surface creation error");
 
     m_inputManager.KeyPressed[m_keyBindings.close][KMOD_NONE].RegisterCallback(this, &App::Close_Callback);
+    m_inputManager.AllEvent.RegisterCallback(this, &App::ReadAlgorithmFromUser_Callback);
 
-    t = std::thread(&Algorithm::Sort, m_algorithm.get(), std::ref(m_numbers));
+    
+   std::cout << "Type the number in the brackets to choose an algorithm:" << std::endl <<
+        "\t[1] - Quick sort" << std::endl <<
+        "\t[2] - Merge sort" << std::endl <<
+        "Order: ";
 }
 
 App::~App()
@@ -49,7 +54,7 @@ void App::Run()
         SDL_RenderClear(m_renderer);
 
         Render();
-
+        
         SDL_RenderPresent(m_renderer);
     }
 }
@@ -57,27 +62,41 @@ void App::Run()
 void App::Close_Callback()
 {
     m_isAppRunning = false;
-    t.join();
 }
 
 void App::Render()
 {
     static const float RECT_SIZE = m_WINDOW_HEIGHT / static_cast<float>(m_numbers.size() + 1);
-    static const float LEFTOVER = (m_WINDOW_WIDTH - m_numbers.size() * RECT_SIZE) / static_cast<float>(m_numbers.size() - 1);
+    static const float GAP_SIZE = (m_WINDOW_WIDTH - m_numbers.size() * RECT_SIZE) / static_cast<float>(m_numbers.size() - 1);
 
     SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
     m_numbers.Lock();
     for (std::size_t i = 0; i < m_numbers.size(); ++i)
     {
         SDL_Rect rect;
-        rect.h = RECT_SIZE * m_numbers[i];
-        rect.w = RECT_SIZE;
-        rect.x = static_cast<int>(i) * (RECT_SIZE + LEFTOVER);
+        rect.h = static_cast<int>(RECT_SIZE * m_numbers[i]);
+        rect.w = static_cast<int>(RECT_SIZE);
+        rect.x = static_cast<int>(i * (RECT_SIZE + GAP_SIZE));
         rect.y = m_WINDOW_HEIGHT - rect.h;
 
         SDL_RenderFillRect(m_renderer, &rect);
     }
     m_numbers.Unlock();
+}
+
+void App::ReadAlgorithmFromUser_Callback(const SDL_Event &event)
+{
+    if (event.type != SDL_KEYDOWN) { return; }
+
+    bool isTaskStillRunning = m_sortingTask.valid() && m_sortingTask.wait_for(std::chrono::milliseconds(0)) != std::future_status::ready;
+    if (isTaskStillRunning) { return; }
+
+    m_algorithm = AlgorithmFactory::MakeAlgorithm(event.key.keysym.sym, m_isAppRunning);
+    if (m_algorithm != nullptr)
+    {
+        m_numbers.Shuffle();
+        m_sortingTask = std::async(std::launch::async, &Algorithm::Sort, m_algorithm.get(), std::ref(m_numbers));
+    }
 }
 
 } // namespace tlr

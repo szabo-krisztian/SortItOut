@@ -12,52 +12,61 @@ public:
 
     void Sort(SyncVector &numbers) override
     {
-        MergeSorting(numbers, 0, numbers.size() - 1);
+        MergeSort_(numbers, 0, static_cast<int>(numbers.size() - 1));
     }
 
 private:
-    void Merge(SyncVector &arr, std::size_t left, std::size_t mid, std::size_t right)
+    void Merge(SyncVector &arr, int left, int mid, int right)
     {
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
         std::vector<int> L(n1), R(n2);
 
-        for (int i = 0; i < n1; i++)
+        for (int i = 0; i < n1; ++i)
+        {
             L[i] = arr[left + i];
-        for (int j = 0; j < n2; j++)
+        }
+        for (int j = 0; j < n2; ++j)
+        {
             R[j] = arr[mid + 1 + j];
-
+        }
+            
         int i = 0, j = 0;
         int k = left;
         
-        while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
+        while (i < n1 && j < n2)
+        {
+            if (L[i] <= R[j])
+            {
                 arr.Assign(k, L[i]);
-                i++;
+                ++i;
             }
-            else {
+            else
+            {
                 arr.Assign(k, R[j]);
-                j++;
+                ++j;
             }
-            k++;
+            ++k;
         }
 
         
-        while (i < n1) {
+        while (i < n1)
+        {
             arr.Assign(k, L[i]);
             i++;
             k++;
         }
 
-        while (j < n2) {
+        while (j < n2)
+        {
             arr.Assign(k, R[j]);
             j++;
             k++;
         }
     }
 
-    void MergeSorting(SyncVector &numbers, std::size_t left, std::size_t right)
+    void MergeSort_(SyncVector &numbers, int left, int right)
     {
         if (left >= right)
         return;
@@ -65,10 +74,10 @@ private:
         int mid = left + (right - left) / 2;
 
         if (!m_isAppRunning) { return; }
-        MergeSorting(numbers, left, mid);
+        MergeSort_(numbers, left, mid);
         
         if (!m_isAppRunning) { return; }
-        MergeSorting(numbers, mid + 1, right);
+        MergeSort_(numbers, mid + 1, right);
 
         if (!m_isAppRunning) { return; }
         Merge(numbers, left, mid, right);

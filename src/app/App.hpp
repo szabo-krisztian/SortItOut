@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <thread>
+#include <future>
 #include <memory>
 
 #include <SDL2/SDL.h>
@@ -35,12 +35,12 @@ private:
     InputManager &m_inputManager;
     volatile bool m_isAppRunning = true;
 
-    
     void Close_Callback();
-    
-    std::thread t;
-    std::unique_ptr<Algorithm> m_algorithm;
+    void ReadAlgorithmFromUser_Callback(const SDL_Event &event);
+
     SyncVector m_numbers;
+    std::unique_ptr<Algorithm> m_algorithm;
+    std::future<void> m_sortingTask;
     
     void Render();
 };

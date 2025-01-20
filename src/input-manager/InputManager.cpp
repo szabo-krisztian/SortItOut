@@ -19,6 +19,7 @@ void InputManager::Update()
     while (SDL_PollEvent(&event))
     {
         ProcessEvent(event);
+        AllEvent.Raise(event);
     }
 
     Uint8 const* keyboardState = SDL_GetKeyboardState(nullptr);

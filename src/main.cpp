@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
         .windowPosX = 100,
         .windowPosY = 100,
         .numberCount = 100,
-        .swapTimeInMillis = 10
+        .swapTimeInMillis = 5
     };
 
     tlr::App app(appConfig);

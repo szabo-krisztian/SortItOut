@@ -12,7 +12,6 @@ SyncVector::SyncVector(std::size_t size, long long swapTimeInMillis) :
     m_swapTimeInMillis(swapTimeInMillis)
 {
     std::iota(m_numbers.begin(), m_numbers.end(), 1);
-    Shuffle();
 }
 
 void SyncVector::Swap(std::size_t i, std::size_t j)

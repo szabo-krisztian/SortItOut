@@ -29,6 +29,7 @@ public:
 
     Event<int, int> MouseMotion;
     Event<int> MouseWheel;
+    Event<SDL_Event const&> AllEvent;
 
     void Update();
     
