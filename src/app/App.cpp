@@ -7,6 +7,8 @@
 #include <chrono>
 #include <thread>
 
+#include "MergeSort.hpp"
+
 namespace tlr
 {
 
@@ -14,7 +16,8 @@ App::App(const AppConfig &appConfig) :
     m_WINDOW_WIDTH(appConfig.windowWidth),
     m_WINDOW_HEIGHT(appConfig.windowHeight),
     m_inputManager(InputManager::GetInstance()),
-    m_numbers(appConfig.numberCount)
+    m_numbers(appConfig.numberCount, appConfig.swapTimeInMillis),
+    m_algorithm(std::make_unique<MergeSort>(m_isAppRunning))
 {
     assert(SDL_Init(SDL_INIT_VIDEO) == 0 && "SDL init error");
     m_window = SDL_CreateWindow("Sort it out", appConfig.windowPosX, appConfig.windowPosY, m_WINDOW_WIDTH, m_WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
@@ -26,7 +29,7 @@ App::App(const AppConfig &appConfig) :
 
     m_inputManager.KeyPressed[m_keyBindings.close][KMOD_NONE].RegisterCallback(this, &App::Close_Callback);
 
-    t = std::thread(&App::StartSorting, this);
+    t = std::thread(&Algorithm::Sort, m_algorithm.get(), std::ref(m_numbers));
 }
 
 App::~App()
@@ -48,46 +51,7 @@ void App::Run()
         Render();
 
         SDL_RenderPresent(m_renderer);
-
-        
     }
-}
-
-void App::StartSorting()
-{
-    
-    
-    while (true)
-    {
-        m_numbers.Lock();
-        m_numbers.Shuffle();
-        m_numbers.Unlock();
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-
-        
-        bool isSorted = true;
-        for (std::size_t i = 1; i < m_numbers.size(); ++i)
-        {
-            if (m_numbers[i] - m_numbers[i - 1] < 0) { isSorted = false; break; }
-        }
-        if (isSorted) {break;}
-    }
-    
-
-    
-    /*
-    for (std::size_t i = 0; i < m_numbers.size() - 1; ++i)
-    {
-        for (std::size_t j = i + 1; j < m_numbers.size(); ++j)
-        {
-            if (m_numbers[i] < m_numbers[j])
-            {
-                m_numbers.Swap(i, j);
-            }
-        }
-    }
-    */
 }
 
 void App::Close_Callback()

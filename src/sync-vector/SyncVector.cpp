@@ -7,7 +7,9 @@
 namespace tlr
 {
 
-SyncVector::SyncVector(std::size_t size) : m_numbers(size)
+SyncVector::SyncVector(std::size_t size, long long swapTimeInMillis) :
+    m_numbers(size),
+    m_swapTimeInMillis(swapTimeInMillis)
 {
     std::iota(m_numbers.begin(), m_numbers.end(), 1);
     Shuffle();
@@ -19,8 +21,16 @@ void SyncVector::Swap(std::size_t i, std::size_t j)
         std::lock_guard<std::mutex> lk(m_mutex);
         std::swap(m_numbers[i], m_numbers[j]);
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_swapTimeInMillis));
+}
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+void SyncVector::Assign(std::size_t i, int value)
+{
+    {
+        std::lock_guard<std::mutex> lk(m_mutex);
+        m_numbers[i] = value;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_swapTimeInMillis));
 }
 
 void SyncVector::Lock()

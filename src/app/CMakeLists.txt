@@ -7,6 +7,7 @@ target_include_directories(App
     PUBLIC
     ../input-manager
     ../sync-vector
+    ../algorithms
 )
 
 target_link_libraries(App
