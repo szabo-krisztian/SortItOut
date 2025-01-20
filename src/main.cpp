@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
         .windowHeight = 600,
         .windowPosX = 100,
         .windowPosY = 100,
-        .numberCount = 107,
+        .numberCount = 100,
         .swapTimeInMillis = 5
     };
 

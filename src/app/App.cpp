@@ -64,6 +64,7 @@ void App::Render()
 {
     // TODO: clean this
     static const float RECT_SIZE = m_WINDOW_HEIGHT / static_cast<float>(m_numbers.size() + 1);
+    
     static const int ROUNDED_RECT_SIZE = static_cast<int>(std::round(RECT_SIZE));
     static const int BETWEEN_GAP_SIZE = static_cast<int>((m_WINDOW_WIDTH - m_numbers.size() * ROUNDED_RECT_SIZE) / static_cast<float>(m_numbers.size() - 1));
     static const int SIDES_GAP_SIZE = static_cast<int>((m_WINDOW_WIDTH - (m_numbers.size() * (ROUNDED_RECT_SIZE + BETWEEN_GAP_SIZE) - BETWEEN_GAP_SIZE)) / 2);
