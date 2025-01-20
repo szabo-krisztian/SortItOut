@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/szabo-krisztian/SortItOut/raw/master/gif/merge_sort.gif" alt="Merge sort">
+  <img src="https://github.com/szabo-krisztian/SortItOut/raw/master/gif/merge_sort_anim.gif" alt="Merge sort">
 </div>
 
 # Sort it out
