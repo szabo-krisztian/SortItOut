@@ -9,7 +9,7 @@ class Algorithm
 {
 public:
     Algorithm(volatile bool &isAppRunning) : m_isAppRunning(isAppRunning) {}
-    virtual ~Algorithm() = default;    
+    virtual ~Algorithm() = default;
 
     virtual void Sort(SyncVector &numbers) = 0;
 

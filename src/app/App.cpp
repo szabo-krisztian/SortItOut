@@ -29,12 +29,6 @@ App::App(const AppConfig &appConfig) :
 
     m_inputManager.KeyPressed[m_keyBindings.close][KMOD_NONE].RegisterCallback(this, &App::Close_Callback);
     m_inputManager.AllEvent.RegisterCallback(this, &App::ReadAlgorithmFromUser_Callback);
-
-    
-   std::cout << "Type the number in the brackets to choose an algorithm:" << std::endl <<
-        "\t[1] - Quick sort" << std::endl <<
-        "\t[2] - Merge sort" << std::endl <<
-        "Order: ";
 }
 
 App::~App()
@@ -46,6 +40,8 @@ App::~App()
 
 void App::Run()
 {
+    AlgorithmFactory::PrintAlgorithms();
+
     while (m_isAppRunning)
     {
         m_inputManager.Update();
@@ -66,8 +62,11 @@ void App::Close_Callback()
 
 void App::Render()
 {
+    // TODO: clean this
     static const float RECT_SIZE = m_WINDOW_HEIGHT / static_cast<float>(m_numbers.size() + 1);
-    static const float GAP_SIZE = (m_WINDOW_WIDTH - m_numbers.size() * RECT_SIZE) / static_cast<float>(m_numbers.size() - 1);
+    static const int ROUNDED_RECT_SIZE = static_cast<int>(std::round(RECT_SIZE));
+    static const int BETWEEN_GAP_SIZE = static_cast<int>((m_WINDOW_WIDTH - m_numbers.size() * ROUNDED_RECT_SIZE) / static_cast<float>(m_numbers.size() - 1));
+    static const int SIDES_GAP_SIZE = static_cast<int>((m_WINDOW_WIDTH - (m_numbers.size() * (ROUNDED_RECT_SIZE + BETWEEN_GAP_SIZE) - BETWEEN_GAP_SIZE)) / 2);
 
     SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
     m_numbers.Lock();
@@ -75,8 +74,8 @@ void App::Render()
     {
         SDL_Rect rect;
         rect.h = static_cast<int>(RECT_SIZE * m_numbers[i]);
-        rect.w = static_cast<int>(RECT_SIZE);
-        rect.x = static_cast<int>(i * (RECT_SIZE + GAP_SIZE));
+        rect.w = ROUNDED_RECT_SIZE;
+        rect.x = SIDES_GAP_SIZE + (static_cast<int>(i) * (ROUNDED_RECT_SIZE + BETWEEN_GAP_SIZE));
         rect.y = m_WINDOW_HEIGHT - rect.h;
 
         SDL_RenderFillRect(m_renderer, &rect);
