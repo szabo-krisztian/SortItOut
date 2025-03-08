@@ -10,13 +10,13 @@ Sorting algorithms visualized with simple animation using the SDL2 C library. Du
 class Algorithm
 {
 public:
-    Algorithm(volatile bool &isAppRunning) : m_isAppRunning(isAppRunning) {}
+    Algorithm(std::atomic<bool> &isAppRunning) : m_isAppRunning(isAppRunning) {}
     virtual ~Algorithm() = default;
 
     virtual void Sort(SyncVector &numbers) = 0;
 
 protected:
-    volatile bool &m_isAppRunning;
+    std::atomic<bool> &m_isAppRunning;
 };
 ```
 
